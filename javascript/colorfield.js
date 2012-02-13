@@ -10,7 +10,7 @@ var ColorFieldHandler = function(){
 	
 	this.initById = function(id){
 		$(id).ColorPicker({
-			onSubmit: function(hsb, hex, rgb) {
+			onChange: function(hsb, hex, rgb) {
 				var mid = (rgb.r + rgb.g + rgb.b) / 3;
 				var col = mid > 127 ? '#000000' : '#ffffff';
 				$(id).val(hex).css({color:col, backgroundColor:'#' + hex});

@@ -5,3 +5,4 @@
  * 
  * ColorPicker jQuery widget/plugin by http://www.eyecon.ro/colorpicker/
  */
+define('COLORPICKER_DIR','colorpicker');
