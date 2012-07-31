@@ -82,6 +82,7 @@
 	margin: 0;
 	padding: 0;
 	height: 11px;
+	width:30px;
 }
 .colorpicker_hex {
 	position: absolute;
@@ -93,6 +94,7 @@
 }
 .colorpicker_hex input {
 	right: 6px;
+	width:45px;
 }
 .colorpicker_field {
 	height: 22px;
