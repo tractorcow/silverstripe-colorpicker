@@ -6,23 +6,25 @@ class ColorField extends TextField {
 	
 	public function __construct($name, $title = null, $value = '', $form = null){
 		parent::__construct($name, $title, $value, 6, $form);
+        
+        $this->addExtraClass('text');
 	}
 	
-	function Field() {
+	function Field($properties = array()) {
 		$this->addExtraClass('ColorPickerInput');
 		Requirements::javascript("colorpicker/javascript/colorpicker.js");
 		Requirements::javascript("colorpicker/javascript/colorfield.js");
 		Requirements::css("colorpicker/css/colorpicker.css");
 		
-		$style = 'background-color:' . ($this->value ? '#' . $this->value : '#ffffff'). 
+		$style = 'background-image: none;background-color:' . ($this->value ? '#' . $this->value : '#ffffff'). 
 				 '; color: ' . ($this->getTextColor()) . ';';
 		$attributes = array(
 			'type' => 'text',
-			'class' => 'text' . ($this->extraClass() ? $this->extraClass() : ''),
+			'class' => 'text text' . ($this->extraClass() ? $this->extraClass() : ''),
 			'id' => $this->id(),
-			'name' => $this->Name(),
+			'name' => $this->getName(),
 			'value' => $this->Value(),
-			'tabindex' => $this->getTabIndex(),
+			'tabindex' => $this->getAttribute('tabindex'),
 			'maxlength' => ($this->maxLength) ? $this->maxLength : null,
 			'size' => ($this->maxLength) ? min( $this->maxLength, 30 ) : null,
 			'style' => $style
@@ -69,7 +71,7 @@ class ColorField_Disabled extends ColorField {
 	
 	protected $disabled = true;
 	
-	function Field() {
+	function Field($properties = array()) {
 		if($this->value) {
 			$val = '#' . $this->value;
 		} else {
