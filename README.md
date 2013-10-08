@@ -15,7 +15,7 @@ Dimension27 have created a git repo for it so as it can easily be reused in silv
  * Extract all files into the 'colorpicker' folder under your Silverstripe root, or install using composer
 
 ```bash
-composer require "tractorcow/silverstripe-colorpicker": "3.0.*@dev"
+composer require "tractorcow/silverstripe-colorpicker" "3.0.*@dev"
 ```
 
 ## Usage
