@@ -6,35 +6,36 @@ class ColorField extends TextField {
 	
 	public function __construct($name, $title = null, $value = '', $form = null){
 		parent::__construct($name, $title, $value, 6, $form);
-        
-        $this->addExtraClass('text');
 	}
 	
-	function Field($properties = array()) {
-		$this->addExtraClass('ColorPickerInput');
-		Requirements::javascript("colorpicker/javascript/colorpicker.js");
-		Requirements::javascript("colorpicker/javascript/colorfield.js");
-		Requirements::css("colorpicker/css/colorpicker.css");
+	public function Field($properties = array()) {
+		$this->addExtraClass('colorfield');
+		Requirements::javascript(COLORPICKER_DIR . '/javascript/colorpicker.js');
+		Requirements::javascript(COLORPICKER_DIR . '/javascript/colorfield.js');
+		Requirements::css(COLORPICKER_DIR . '/css/colorpicker.css');
 		
-		$style = 'background-image: none;background-color:' . ($this->value ? '#' . $this->value : '#ffffff'). 
-				 '; color: ' . ($this->getTextColor()) . ';';
-		$attributes = array(
-			'type' => 'text',
-			'class' => 'text text' . ($this->extraClass() ? $this->extraClass() : ''),
-			'id' => $this->id(),
-			'name' => $this->getName(),
-			'value' => $this->Value(),
-			'tabindex' => $this->getAttribute('tabindex'),
-			'maxlength' => ($this->maxLength) ? $this->maxLength : null,
-			'size' => ($this->maxLength) ? min( $this->maxLength, 30 ) : null,
-			'style' => $style
-		);
+		$this->setAttribute('style', 
+			'background-image: none; '.
+			'background-color:'. ($this->value ? '#' . $this->value : '#ffffff').
+			'; ' . $this->getTextColorStyle());
 		
-		if($this->disabled) $attributes['disabled'] = 'disabled';
-		return $this->createTag('input', $attributes);
+		return parent::Field($properties);
+	}
+	
+	/**
+	 * Override the type to get the proper class name on the field
+	 * "text" is needed here to render the form field as a normal text-field
+	 * @see FormField::Type()
+	 */
+	public function Type(){
+		return 'text';
 	}
 
-	function validate($validator)
+	/**
+	 * Ensure the color is a valid hexadecimal color
+	 * @see FormField::validate()
+	 */
+	public function validate($validator)
 	{
 		if(!empty ($this->value) && !preg_match('/^[A-f0-9]{6}$/', $this->value))
 		{
@@ -49,55 +50,23 @@ class ColorField extends TextField {
 		return true;
 	}
 	
-	protected function getTextColor()
+	/**
+	 * Calculate the text color style so that it's visible on the background
+	 * @return string
+	 */
+	protected function getTextColorStyle()
 	{
+		// change alpha component depending on disabled state
+		$a = $this->isDisabled() ? '0.5' : '1.0';
 		if($this->value) {
-			$c = intval($this->value, 16);
-			$r = $c >> 16;
-			$g = ($c >> 8) & 0xff;
-			$b = $c & 0xff;
-			$mid = ($r + $g + $b) / 3;
-			return ($mid > 127) ? '#000000' : '#ffffff';
+			list($R, $G, $B) = Color::HEX_TO_RGB($this->value);
+			$luminance = Color::RGB_TO_LUMINANCE($R, $G, $B);
+			// return color as hex and as rgba values (hex is fallback for IE-8)
+			return ($luminance > 0.5) ? 
+				'color: #000; color: rgba(0, 0, 0, '. $a .');' : 
+				'color: #fff; color: rgba(255, 255, 255, '. $a .');';
 		} else {
-			return '#000000';
+			return 'color: #000; color: rgba(0, 0, 0, '. $a .');';
 		}
 	}
 }
-
-/**
- * Disabled version of {@link ColorField}.
- */
-class ColorField_Disabled extends ColorField {
-	
-	protected $disabled = true;
-	
-	function Field($properties = array()) {
-		if($this->value) {
-			$val = '#' . $this->value;
-		} else {
-			$val = '#ffffff';
-		}
-		
-		$col = $this->getTextColor();
-		
-		return "<span class=\"readonly\" id=\"" . $this->id() . "\" style=\"color:$col; background:$val;\">$val</span>
-				<input type=\"hidden\" value=\"{$this->value}\" name=\"$this->name\" />";
-	}
-	
-	function Type() { 
-		return "date_disabled readonly";
-	}
-	
-	function jsValidation() {
-		return null;
-	}
-
-	function php() {
-		return true;
-	}
-	
-	function validate($validator) {
-		return true;	
-	}
-}
-?>
