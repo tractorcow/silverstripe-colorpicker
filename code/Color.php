@@ -207,7 +207,7 @@ class Color extends Varchar
 		list($R, $G, $B) = self::HEX_TO_RGB($this->value);
 		list($H, $S, $V) = self::RGB_TO_HSV($R, $G, $B);
 		list($R, $G, $B) = self::HSV_TO_RGB(
-			self::clamp($H + $hChange, 0.0, 1.0),
+			fmod($H + $hChange + 1, 1),
 			self::clamp($S + $sChange, 0.0, 1.0),
 			self::clamp($V + $vChange, 0.0, 1.0));
 		$color = new Color();
