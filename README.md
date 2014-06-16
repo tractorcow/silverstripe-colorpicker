@@ -39,7 +39,7 @@ public function getCMSFields()
 }
 ```
 
-### Tipps for using the Color fieldtype in templates
+### Tips for using the Color fieldtype in templates
 
 The `Color` fieldtype provides some helper methods that can be useful in templating. Let's consider the above scenario where you have a Field named 'BgColor'. The most common use-case is something like this:
 
