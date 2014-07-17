@@ -8,7 +8,7 @@ class ColorField extends TextField {
 		parent::__construct($name, $title, $value, 6, $form);
 	}
 	
-	function Field() {
+	function Field($properties = array()) {
 		$this->addExtraClass('ColorPickerInput');
 		Requirements::javascript(COLORPICKER_DIR."/javascript/colorpicker.js");
 		Requirements::javascript(COLORPICKER_DIR."/javascript/colorfield.js");
@@ -20,9 +20,8 @@ class ColorField extends TextField {
 			'type' => 'text',
 			'class' => 'text' . ($this->extraClass() ? $this->extraClass() : ''),
 			'id' => $this->id(),
-			'name' => $this->Name(),
+			'name' => $this->getName(),
 			'value' => $this->Value(),
-			'tabindex' => $this->getTabIndex(),
 			'maxlength' => ($this->maxLength) ? $this->maxLength : null,
 			'size' => ($this->maxLength) ? min( $this->maxLength, 30 ) : null,
 			'style' => $style
@@ -69,7 +68,7 @@ class ColorField_Disabled extends ColorField {
 	
 	protected $disabled = true;
 	
-	function Field() {
+	function Field($properties = array()) {
 		if($this->value) {
 			$val = '#' . $this->value;
 		} else {
@@ -98,4 +97,3 @@ class ColorField_Disabled extends ColorField {
 		return true;	
 	}
 }
-?>
