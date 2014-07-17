@@ -1,0 +1,21 @@
+{
+	"name" : "burnbright/silverstripe-colorpicker",
+	"description" : "SilverStripe form field for choosing a color.",
+	"license" : "BSD-2-Clause",
+	"type" : "silverstripe-module",
+	"keywords" : ["silverstripe","colorpicker"],
+	"authors" : [
+		{
+			"name" : "Jeremy Shipman",
+			"email" : "jeremy@burnbright.net",
+			"homepage" : "https://github.com/jedateach",
+			"role" : "Developer"
+		}
+	],
+	"require" : {
+		"silverstripe/framework": "~3.1"
+	},
+	"extra" : {
+		"installer-name": "colorpicker"
+    }
+}
