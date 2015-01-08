@@ -215,6 +215,31 @@ class Color extends Varchar
 		return $color;
 	}
 
+	/**
+	 * Blend the color with a background color, with the given opacity level
+	 * @param float $opacity Opacity level of the current color (between 0 - 1)
+	 * @param string $background The background color
+	 * @return string
+	 */
+	public function Blend($opacity, $background = 'FFFFFF') {
+		list($R, $G, $B) = self::HEX_TO_RGB($this->value);
+		list($bgR, $bgG, $bgB) = self::HEX_TO_RGB(ltrim($background, '#'));
+		$opacity = self::clamp($opacity, 0, 1);
+		
+		$add = array(
+			'r' => ($bgR - $R) / 100,
+			'g' => ($bgG - $G) / 100,
+			'b' => ($bgB - $B) / 100
+		);
+						
+		$transparency = (1 - $opacity) * 100;
+		$R += intval($add['r'] * $transparency);
+		$G += intval($add['g'] * $transparency);
+		$B += intval($add['b'] * $transparency);
+		
+		return self::RGB_TO_HEX($R, $G, $B);
+	}
+
 	private static function clamp($val, $min, $max){
 		return min($max, max($min, $val));
 	}
