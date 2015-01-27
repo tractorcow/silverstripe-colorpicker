@@ -64,6 +64,7 @@ Here's a complete list of the `Color` methods available in templates:
  - `Blue` returns the blue color component
  - `CSSColor` returns the color as `rgba`. The alpha value can be specified with the (optional) argument.
  - `Luminance` the luminance of the color as a floating-point value ranging from 0-1
+ - `Blend` blends the color with a second background color (defaults to #FFFFFF) with the given opacity. `$BGColor.Blend(0.5, '#000000')` will give the color 50% opacity and put it on top of a black background.
  - `AlteredColorHSV` modifies the current color by the given HSV values. These values are offsets, so you could do something like this: `$BgColor.AlteredColorHSV(0.5, 0, 0)` which will return the color with the opposite hue. All parameters are percentage based and range from `0 - 1`. So doing: `$BgColor.AlteredColorHSV(0, 0, -0.2)` will result in a color with 20% less brightness (absolute, not relative).
 
  
