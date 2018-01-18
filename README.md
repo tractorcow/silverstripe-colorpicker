@@ -22,11 +22,24 @@ composer require tractorcow/silverstripe-colorpicker ^4@dev
 Here's how you define a DB field to be a color:
 
 ```php
-private static $db = array(
-    'BgColor' => 'TractorCow\Colorpicker\Color'
-);
+private static $db = [
+    'BgColor' => 'Color'
+];
 ```
-    
+
+Alternatively, you can also use the fully qualified classname. 
+The best way to do this is to import the class at the top of your PHP file, like so:
+
+    use TractorCow\Colorpicker\Color;
+
+In your class, you can then use:
+
+```php
+private static $db = [
+    'BgColor' => Color::class
+];
+```
+
 That's all... scaffolding will take care of creating the appropriate form-field.
 
 If you use `getCMSFields` to create your fields yourself, you might want to do something like this:
