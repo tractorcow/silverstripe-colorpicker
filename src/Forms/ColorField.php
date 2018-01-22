@@ -27,10 +27,11 @@ class ColorField extends TextField
 
     public function Field($properties = [])
     {
+        Requirements::javascript('tractorcow/silverstripe-colorpicker: client/javascript/colorfield.js');
+        Requirements::javascript('tractorcow/silverstripe-colorpicker: client/javascript/colorpicker.js');
+        Requirements::css('tractorcow/silverstripe-colorpicker: client/css/colorpicker.css');
+
         $this->addExtraClass('colorfield');
-        Requirements::javascript(COLORPICKER_DIR . '/client/javascript/colorpicker.js');
-        Requirements::javascript(COLORPICKER_DIR . '/client/javascript/colorfield.js');
-        Requirements::css(COLORPICKER_DIR . '/client/css/colorpicker.css');
 
         $this->setAttribute('style', sprintf(
             'background-image: none; background-color: %s; %s',

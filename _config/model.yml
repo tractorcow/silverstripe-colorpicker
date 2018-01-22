@@ -1,0 +1,7 @@
+---
+Name: colorpicker-fieldtypes
+After: corefieldtypes
+---
+SilverStripe\Core\Injector\Injector:
+  Color:
+    class: TractorCow\Colorpicker\Color

@@ -13,7 +13,7 @@ class Color extends DBVarchar
 {
     private static $casting = [
         'Luminance' => 'Float',
-        'AlteredColorHSV' => 'TractorCow\Colorpicker\Color'
+        'AlteredColorHSV' => Color::class
     ];
 
     /**
@@ -168,7 +168,7 @@ class Color extends DBVarchar
 
     public function scaffoldFormField($title = null, $params = null)
     {
-        $field = new ColorField($this->name, $title);
+        $field = ColorField::create($this->name, $title);
         return $field;
     }
 
