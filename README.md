@@ -31,6 +31,7 @@ Alternatively, you can also use the fully qualified classname.
 The best way to do this is to import the class at the top of your PHP file, like so:
 
     use TractorCow\Colorpicker\Color;
+    use TractorCow\Colorpicker\Forms\ColorField;
 
 In your class, you can then use:
 
