@@ -1,1 +1,5 @@
-When having discussions about this module in issues or pull request please adhere to the [SilverStripe Community Code of Conduct](https://docs.silverstripe.org/en/contributing/code_of_conduct).
+# Contributor Code of Conduct
+
+This project adheres to No Code of Conduct.  We are all adults.  We accept anyone's contributions.  Nothing else matters.
+
+For more information please visit the [No Code of Conduct](https://github.com/domgetter/NCoC) homepage.
