@@ -2,6 +2,8 @@
 
 namespace TractorCow\Colorpicker;
 
+use Silverstripe\Core\Convert;
+use SilverStripe\ORM\FieldType\DBField;
 use SilverStripe\ORM\FieldType\DBVarchar;
 use TractorCow\Colorpicker\Forms\ColorField;
 
@@ -279,5 +281,20 @@ class Color extends DBVarchar
     private static function clamp($val, $min = 0, $max = 1)
     {
         return min($max, max($min, $val));
+    }
+
+    /**
+     * HTML representation of color for usage in CMS	 * 
+     * @return string HTML code containing color and HEX color code
+     */
+    public function ColorCMS()
+    {
+
+        $colorhtml = '';
+        if($this->value) {
+            $colorhex = Convert::raw2xml($this->value);
+            $colorhtml = '<span class="color-cms" style="display: inline-block; vertical-align: bottom; width: 20px; height: 20px; border-radius: 10px; background-color: #'.$colorhex.'"></span> #'.$colorhex;
+        }
+        return DBField::create_field('HTMLText', $colorhtml);
     }
 }
