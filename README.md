@@ -5,7 +5,7 @@ Plugin.
 
 ## Requirements
 
-SilverStripe Framework v4+
+SilverStripe Framework v4+ and v5+
 
 For a Version that is compatible to SilverStripe 3+, consider using the [3.0 release](https://github.com/tractorcow/silverstripe-colorpicker/releases/tag/3.0.0)
 
@@ -27,7 +27,7 @@ private static $db = [
 ];
 ```
 
-Alternatively, you can also use the fully qualified classname. 
+Alternatively, you can also use the fully qualified classname.
 The best way to do this is to import the class at the top of your PHP file, like so:
 
     use TractorCow\Colorpicker\Color;
@@ -51,7 +51,7 @@ public function getCMSFields()
     $fields = parent::getCMSFields();
 
     $fields->addFieldToTab(
-    	'Root.Main', 
+    	'Root.Main',
     	ColorField::create('BgColor', 'Background color')
     );
 
@@ -61,7 +61,7 @@ public function getCMSFields()
 
 ### Tips for using the Color fieldtype in templates
 
-The `TractorCow\Colorpicker\Color` fieldtype provides some helper methods that can be useful in templating. 
+The `TractorCow\Colorpicker\Color` fieldtype provides some helper methods that can be useful in templating.
 Let's consider the above scenario where you have a Field named 'BgColor'. The most common use-case is something like this:
 
 ```html
