@@ -58,10 +58,10 @@ class Color extends DBVarchar
                 $H = (2 / 3) + $del_G - $del_R;
             }
 
-            if ($H<0) {
+            if ($H < 0) {
                 $H++;
             }
-            if ($H>1) {
+            if ($H > 1) {
                 $H--;
             }
         }
@@ -91,28 +91,34 @@ class Color extends DBVarchar
         $N = $V * (1 - $S * $F);
         $K = $V * (1 - $S * (1 - $F));
         $R = $G = $B = 0;
+
         switch ($I) {
             case 0:
-                list($R, $G, $B) = [$V,$K,$M];
+                list($R, $G, $B) = [$V, $K, $M];
                 break;
             case 1:
-                list($R, $G, $B) = [$N,$V,$M];
+                list($R, $G, $B) = [$N, $V, $M];
                 break;
             case 2:
-                list($R, $G, $B) = [$M,$V,$K];
+                list($R, $G, $B) = [$M, $V, $K];
                 break;
             case 3:
-                list($R, $G, $B) = [$M,$N,$V];
+                list($R, $G, $B) = [$M, $N, $V];
                 break;
             case 4:
-                list($R, $G, $B) = [$K,$M,$V];
+                list($R, $G, $B) = [$K, $M, $V];
                 break;
             case 5:
             case 6: //for when $H=1 is given
-                list($R, $G, $B) = [$V,$M,$N];
+                list($R, $G, $B) = [$V, $M, $N];
                 break;
         }
-        return [$R * 255.0, $G * 255.0, $B * 255.0];
+
+        return [
+            round($R * 255),
+            round($G * 255),
+            round($B * 255)
+        ];
     }
 
     /**
@@ -145,9 +151,9 @@ class Color extends DBVarchar
      */
     public static function RGB_TO_HEX($R, $G, $B)
     {
-        $R = self::clamp($R, 0, 255);
-        $G = self::clamp($G, 0, 255);
-        $B = self::clamp($B, 0, 255);
+        $R = round(self::clamp($R, 0, 255));
+        $G = round(self::clamp($G, 0, 255));
+        $B = round(self::clamp($B, 0, 255));
         return sprintf("%06X", ($R << 16) | ($G << 8) | $B);
     }
 
@@ -156,7 +162,7 @@ class Color extends DBVarchar
      * @param int $R
      * @param int $G
      * @param int $B
-     * @return number 0-1
+     * @return float 0-1
      */
     public static function RGB_TO_LUMINANCE($R, $G, $B)
     {
@@ -207,7 +213,7 @@ class Color extends DBVarchar
     /**
      * Get the color as CSS3 color definition with optional alpha value.
      * Will return "rgba(RED, GREEN, BLUE, OPACITY)"
-     * @param number $opacity opacity value from 0-1
+     * @param float $opacity opacity value from 0-1
      * @return string css3 color definition
      */
     public function CSSColor($opacity = 1)
@@ -238,11 +244,12 @@ class Color extends DBVarchar
     {
         list($R, $G, $B) = self::HEX_TO_RGB($this->value);
         list($H, $S, $V) = self::RGB_TO_HSV($R, $G, $B);
-        list($R, $G, $B) = self::HSV_TO_RGB(
+
+        list($R, $G, $B) = array_map('round', self::HSV_TO_RGB(
             fmod($H + $hChange + 1, 1),
             self::clamp($S + $sChange),
             self::clamp($V + $vChange)
-        );
+        ));
 
         $color = new Color();
         $color->setValue(self::RGB_TO_HEX($R, $G, $B));
@@ -274,9 +281,9 @@ class Color extends DBVarchar
     /**
      * Clamp value to min/max
      * @param float|int $val
-     * @param float|int $min, defaults to 0
-     * @param float|int $max, defaults to 1
-     * @return float|int value clamped to min/max.
+     * @param float|int $min defaults to 0
+     * @param float|int $max defaults to 1
+     * @return float|int value clamped to min/max
      */
     private static function clamp($val, $min = 0, $max = 1)
     {
@@ -284,14 +291,13 @@ class Color extends DBVarchar
     }
 
     /**
-     * HTML representation of color for usage in CMS	 * 
-     * @return string HTML code containing color and HEX color code
+     * HTML representation of color for usage in CMS
+     * @return DBField HTML code containing color and HEX color code
      */
     public function ColorCMS()
     {
-
         $colorhtml = '';
-        if($this->value) {
+        if ($this->value) {
             $colorhex = Convert::raw2xml($this->value);
             $colorhtml = '<span class="color-cms" style="display: inline-block; vertical-align: bottom; width: 20px; height: 20px; border-radius: 10px; background-color: #'.$colorhex.'"></span> #'.$colorhex;
         }
