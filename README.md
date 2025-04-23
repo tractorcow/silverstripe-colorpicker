@@ -5,16 +5,17 @@ Plugin.
 
 ## Requirements
 
-SilverStripe Framework v4+ and v5+
+SilverStripe Framework v4+, v5+, & v6+
 
 For a Version that is compatible to SilverStripe 3+, consider using the [3.0 release](https://github.com/tractorcow/silverstripe-colorpicker/releases/tag/3.0.0)
+For a Version that is compatible to SilverStripe 5+, consider using the [4.0 release](https://github.com/tractorcow/silverstripe-colorpicker/releases/tag/4.2.1)
 
 ## Installation
 
 Install using composer
 
 ```bash
-composer require tractorcow/silverstripe-colorpicker ^4@dev
+composer require tractorcow/silverstripe-colorpicker
 ```
 
 ## Usage

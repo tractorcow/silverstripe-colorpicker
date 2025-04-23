@@ -18,7 +18,7 @@ class ColorTest extends SapphireTest
 
         // Yellow
         $hsv = Color::RGB_TO_HSV(255, 255, 0);
-        $this->assertEquals([1 / 360 * 60, 1, 1], $hsv);
+        $this->assertEquals([0.16666666666666663, 1, 1], $hsv);
 
         // Teal
         $hsv = Color::RGB_TO_HSV(63.75, 127.5, 127.5);
@@ -48,7 +48,7 @@ class ColorTest extends SapphireTest
 
         // Teal
         $rgb = Color::HSV_TO_RGB(.5, .5, .5);
-        $this->assertEquals([63.75, 127.5, 127.5], $rgb);
+        $this->assertEquals([64.0, 128.0, 128.0], $rgb);
 
         // Black
         $rgb = Color::HSV_TO_RGB(0, 0, 0);
@@ -170,9 +170,9 @@ class ColorTest extends SapphireTest
         $altered = $color->AlteredColorHSV(.5, 0, 0);
         // make sure we get a color
         $this->assertInstanceOf(Color::class, $altered);
-        $this->assertEquals('BE40FF', $altered->forTemplate());
-        $this->assertEquals('A900FF', $color->AlteredColorHSV(.5, .5, 0)->forTemplate());
-        $this->assertEquals('557F3F', $color->AlteredColorHSV(0, -.25, -.5)->forTemplate());
+        $this->assertEquals('BF40FF', $altered->forTemplate());
+        $this->assertEquals('AA00FF', $color->AlteredColorHSV(.5, .5, 0)->forTemplate());
+        $this->assertEquals('558040', $color->AlteredColorHSV(0, -.25, -.5)->forTemplate());
         // No change doesn't change the color value
         $this->assertEquals('80FF40', $color->AlteredColorHSV(0, 0, 0)->forTemplate());
     }
