@@ -1,0 +1,11 @@
+node_modules
+/vendor/
+resources/
+assets/
+.DS_Store
+.idea
+composer.lock
+.phpunit.result.cache
+app/
+public/
+coverage/

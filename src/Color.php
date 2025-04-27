@@ -3,6 +3,7 @@
 namespace TractorCow\Colorpicker;
 
 use Silverstripe\Core\Convert;
+use SilverStripe\Forms\FormField;
 use SilverStripe\ORM\FieldType\DBField;
 use SilverStripe\ORM\FieldType\DBVarchar;
 use TractorCow\Colorpicker\Forms\ColorField;
@@ -13,7 +14,7 @@ use TractorCow\Colorpicker\Forms\ColorField;
  */
 class Color extends DBVarchar
 {
-    private static $casting = [
+    private static array $casting = [
         'Luminance' => 'Float',
         'AlteredColorHSV' => Color::class
     ];
@@ -174,7 +175,7 @@ class Color extends DBVarchar
         parent::__construct($name, 16, $options);
     }
 
-    public function scaffoldFormField($title = null, $params = null)
+    public function scaffoldFormField(?string $title = null, array $params = []): ?FormField
     {
         $field = ColorField::create($this->name, $title);
         return $field;

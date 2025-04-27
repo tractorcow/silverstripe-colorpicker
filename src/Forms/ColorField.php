@@ -2,6 +2,7 @@
 
 namespace TractorCow\Colorpicker\Forms;
 
+use SilverStripe\Core\Validation\ValidationResult;
 use TractorCow\Colorpicker\Color;
 use SilverStripe\Forms\Form;
 use SilverStripe\View\Requirements;
@@ -54,22 +55,19 @@ class ColorField extends TextField
     /**
      * Ensure the color is a valid hexadecimal color
      * @see FormField::validate()
-     *
-     * @param \SilverStripe\Forms\Validator $validator
-     * @return bool whether or not the field is valid
      */
-    public function validate($validator)
+    public function validate(): ValidationResult
     {
+        $result = parent::validate();
+
         if (!empty($this->value) && !preg_match('/^[A-f0-9]{6,8}$/', $this->value)) {
-            $validator->validationError(
-                $this->name,
-                _t('ColorField.VALIDCOLORFORMAT', 'Please enter a valid color in hexadecimal format.'),
-                'validation',
-                false
+            $result->addFieldError(
+                $this->getName(),
+                _t('ColorField.VALIDCOLORFORMAT', 'Please enter a valid color in hexadecimal format.')
             );
-            return false;
         }
-        return true;
+
+        return $result;
     }
 
     /**
